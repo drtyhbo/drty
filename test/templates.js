@@ -1,3 +1,5 @@
+(function() {
+
 exports.run = function() {	
 	var assert = require('assert'),
 		drty = require('../lib/drty');
@@ -52,3 +54,5 @@ exports.run = function() {
 		assert.equal(data, '1 2 3 ');
 	});
 }
+
+})();
