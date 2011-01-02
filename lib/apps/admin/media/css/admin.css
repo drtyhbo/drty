@@ -1,0 +1,133 @@
+body {
+	font-family: Tahoma;
+	margin: 0px;
+}
+
+table.login { border: 1px solid #ddd; }
+
+table.login .title { background: #eee; }
+table.login .error { color: red; }
+
+table.login td {
+	padding: 5px;
+	font-size: 12px;
+}
+
+.content { margin: 0px 20px; }
+
+h3 { margin-bottom: 5px; }
+
+.header {
+	height: 60px;
+	padding-left: 10px;
+	line-height: 60px;
+
+	background: #eee;
+}
+
+.header .title {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.header .welcome {
+	position: absolute;
+	right: 10px;
+}
+
+.crumbs {
+	height: 30px;
+	line-height: 30px;
+	padding-left: 20px;
+
+	color: #888;
+	font-size: 13px;
+	border-bottom: 1px solid #ddd;
+}
+.crumbs a {
+	color: #444;
+	font-size: 13px;
+}
+
+.models {
+	width: 500px;
+	border: 1px solid #999;
+}
+.models table { border-collapse: collapse; }
+.models td {
+	padding: 5px;
+	border-bottom: 1px solid #ddd;
+}
+
+.model_name {
+	width: 400px;
+	padding: 2px;
+	font-size: 15px;
+}
+.model_add, .model_change {
+	font-size: 14px;
+}
+
+.items {
+	width: 100%;
+	border: 1px solid #999;
+}
+
+.items table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.items td {
+	padding: 5px;
+	border: 1px solid #ddd;
+}
+.item_id { width: 50px; }
+.item_id, .item_name { font-weight: bold; }
+
+.fields {
+	width: 100%;
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+}
+.fields td {
+	padding: 10px;
+	font-size: 14px;
+}
+.fields .name { width: 125px; }
+
+select, input, textarea {
+	padding: 4px;
+	border: 1px solid #aaa;
+
+	font-family: Tahoma;
+	font-size: 13px;
+}
+
+span.error {
+	display: block;
+	color: red;
+}
+.error select, .error input, .error textarea {
+	border: 1px solid red;
+}
+
+.fields input.text { width: 250px; }
+.fields input.integer { width: 100px; }
+.fields textarea {
+	width: 625px; height: 200px;
+}
+
+.actions {
+	height: 50px;
+	background: #eee;
+}
+.actions input {
+	width: 100px;
+	background: white;
+}
+
+a {
+	color: #008080;
+	text-decoration: none;
+}
+a:hover { color: #000; }
