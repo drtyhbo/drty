@@ -1,0 +1,1 @@
+{.section bool}true{.or}false{.end}
