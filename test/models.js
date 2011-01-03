@@ -7,16 +7,18 @@ var Model1,
 	conn;
 
 exports.run = function() {
-	var models = require('../lib/drty').models;
+	var drty = require('../lib/drty'),
+		models = drty.models;
 		
-	var config = {
-		DB: models.db.MySQL,
-		HOST: 'localhost',
-		USER: 'test',
-		PASS: 'binn',
-		NAME: 'test'
-	};
-	models.config(config);
+	drty.config({
+		models: {
+			DB: models.db.MySQL,
+			HOST: 'localhost',
+			USER: 'test',
+			PASS: 'binn',
+			NAME: 'test'
+		}
+	});
 
 	Model1 = models.add('model_1', {
 				i: models.fields.integer(),
@@ -29,6 +31,7 @@ exports.run = function() {
 				s: models.fields.string({maxLength: 32})
 			});
 
+	var config = drty.config().models;
 	conn = require("mysql-libmysqlclient").createConnectionSync(config.HOST,
 			config.USER, config.PASS, config.NAME);
 
