@@ -8,8 +8,8 @@ drty.config({
 		PASS: 'demo',
 		NAME: 'demo'
 	},
-	templates: {
-		DIR: 'templates/'
+	template: {
+		DIR: 'templates'
 	}
 });
 
@@ -23,7 +23,26 @@ apps
 		});
 
 require('./models'),
-require('./urls'),
-require('./views');
 
-drty.server.listen(8080);
+drty.urls
+	.add('^/$', 'root')
+	.add('^/login/$', 'login')
+	.add('^/register/$', 'register')
+	.add('^/logout/$', 'logout')
+	.add('^/blog/:username/$', 'home')
+	.add('^/post/$', 'post')
+	.add('^/media/', 'media');
+
+var views = require('./views');
+drty.views
+		.add('root', views.root)
+		.add('login', views.login)
+		.add('register', views.register)
+
+// Set up static media serving
+drty.views.add('media', drty.views.staticView,
+	require('path').join(__dirname, 'media/'));
+drty.template.defaultContext('MEDIA_URL', drty.urls.reverse('media'));
+
+
+drty.go();

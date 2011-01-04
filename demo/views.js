@@ -1,29 +1,36 @@
 var drty = require('../lib/drty'),
-	urls = drty.urls,
-	views = drty.views;
+	forms = require('./forms');
 	
-var myForms = require('./forms');
-	
-views
-	.add('root', function(request, response) {
-		response.redirect(urls.reverse('login'));
-	});
-	
-views
-	.add('login', function(request, response) {
-		var form;
-		if (request.method == "POST") {
-			form = new myForms.LoginForm(request.POST);
-			if (form.clean()) {
-				
-			}
-		} else {
-			form = new myForms.LoginForm();
-		}
-		drty.templates.render
-	})
+exports.root = function(request, response) {
+	response.redirect(drty.urls.reverse('login'));
+};
 
-views
-	.add('^/logout/$', 'logout')
-		.add('^/blog/:username/$', 'home')
-		.add('^/post/$', 'post');
+exports.login = function(request, response) {
+	var form;
+	if (request.method == "POST") {
+		form = new forms.LoginForm(request.POST);
+		if (form.clean()) {
+
+		}
+	} else {
+		form = new forms.LoginForm();
+	}
+	drty.template.render('login.tpl', {form: form}, function(html) {
+		response.ok(html);
+	})
+};
+
+exports.register = function(request, response) {
+	var form;
+	if (request.method == "POST") {
+		form = new forms.RegisterForm(request.POST);
+		if (form.clean()) {
+
+		}
+	} else {
+		form = new forms.RegisterForm();
+	}
+	drty.template.render('register.tpl', {form: form}, function(html) {
+		response.ok(html);
+	})
+};

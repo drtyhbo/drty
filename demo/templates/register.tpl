@@ -5,14 +5,14 @@
 <body>
 	<form method="POST">
 		<center>
-		<h2>Login</h2>
-		<table cellpadding="5">
+		<h2>Register</h2>
+		<table cellspacing="5">
 		{.call form.toTable}
 		<tr><td colspan="2" align="center">
 			<input type="submit" value="Login">
 		</td></tr>
 		</table>
-		No account? <a href="{.call urlreverse register}">register</a> for free!
+		Already have an account? <a href="{.call urlreverse login}">login</a>!
 		</center>
 	</form>
 </body>

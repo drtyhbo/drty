@@ -8,6 +8,9 @@ are:
   - mootools, located under lib/nachojs. This code is copyrighted
     by Valerio Proietti. Released under an MIT license.
 
+  - json2, located under lib/nachojs. This code was released under
+    public domain by Douglas Crockford.
+
 
 drty's license follows:
 
