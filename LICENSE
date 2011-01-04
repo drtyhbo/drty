@@ -11,6 +11,9 @@ are:
   - json2, located under lib/nachojs. This code was released under
     public domain by Douglas Crockford.
 
+  - djangode, located under lib/djangode. This code is copyrighted
+    by Anders Hellerup Madsen and Simon Willisons. Released under a
+    BSD license.
 
 drty's license follows:
 
