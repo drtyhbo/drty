@@ -2,10 +2,10 @@ var drty = require('drty');
 
 exports.settings = {
 	DATABASE: {
-		ENGINE: drty.models.db.MySQL,
-		NAME: 'DATABASE NAME',
-		USER: 'USERNAME',
-		PASSWORD: 'PASSWORD',
+		ENGINE: drty.db.backends.MySQL,
+		NAME: 'demo',
+		USER: 'demo',
+		PASSWORD: 'demo',
 		HOST: '',
 		PORT: ''
 	},
@@ -13,7 +13,9 @@ exports.settings = {
 		// ENTER TEMPLATE DIRECTORIES HERE
 	],
 	INSTALLED_APPS: [
-		drty.apps.sessions
+		drty.contrib.sessions,
+		drty.contrib.auth,
+		require('./blog')
 	],
 
 	ROOT_URLCONF: require('./urls')
