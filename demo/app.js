@@ -9,7 +9,8 @@ drty.config({
 		NAME: 'demo'
 	},
 	template: {
-		DIR: 'templates'
+		DIR: 'templates',
+		CACHE: true
 	}
 });
 
@@ -42,7 +43,5 @@ drty.views
 // Set up static media serving
 drty.views.add('media', drty.views.staticView,
 	require('path').join(__dirname, 'media/'));
-drty.template.defaultContext('MEDIA_URL', drty.urls.reverse('media'));
-
 
 drty.go();

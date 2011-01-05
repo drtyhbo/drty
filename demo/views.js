@@ -1,5 +1,13 @@
 var drty = require('../lib/drty'),
 	forms = require('./forms');
+
+function renderTemplate(filename, context, callback) {
+	var context = drty.utils.merge(context, {
+		MEDIA_URL: drty.urls.reverse('media')
+	});
+	
+	drty.template.loadAndRender(filename, context, callback);
+}
 	
 exports.root = function(request, response) {
 	response.redirect(drty.urls.reverse('login'));
@@ -15,9 +23,9 @@ exports.login = function(request, response) {
 	} else {
 		form = new forms.LoginForm();
 	}
-	drty.template.loadAndRender('login.tpl', {form: form}, function(html) {
+	renderTemplate('login.tpl', {form: form}, function(html) {
 		response.ok(html);
-	})
+	});
 };
 
 exports.register = function(request, response) {
@@ -30,7 +38,7 @@ exports.register = function(request, response) {
 	} else {
 		form = new forms.RegisterForm();
 	}
-	drty.template.loadAndRender('register.tpl', {form: form}, function(html) {
+	renderTemplate('register.tpl', {form: form}, function(html) {
 		response.ok(html);
-	})
+	});
 };
