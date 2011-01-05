@@ -15,7 +15,7 @@ exports.login = function(request, response) {
 	} else {
 		form = new forms.LoginForm();
 	}
-	drty.template.render('login.tpl', {form: form}, function(html) {
+	drty.template.loadAndRender('login.tpl', {form: form}, function(html) {
 		response.ok(html);
 	})
 };
@@ -30,7 +30,7 @@ exports.register = function(request, response) {
 	} else {
 		form = new forms.RegisterForm();
 	}
-	drty.template.render('register.tpl', {form: form}, function(html) {
+	drty.template.loadAndRender('register.tpl', {form: form}, function(html) {
 		response.ok(html);
 	})
 };

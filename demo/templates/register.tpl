@@ -7,7 +7,7 @@
 		<center>
 		<h2>Register</h2>
 		<table cellspacing="5">
-		{.call form.toTable}
+		{{ form.toTable }}
 		<tr><td colspan="2" align="center">
 			<input type="submit" value="Login">
 		</td></tr>
