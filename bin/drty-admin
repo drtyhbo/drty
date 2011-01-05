@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+
+var drty = require('drty');
+drty.core.management.execute();
