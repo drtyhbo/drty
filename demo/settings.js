@@ -17,6 +17,9 @@ exports.settings = {
 		drty.contrib.auth,
 		require('./blog')
 	],
+	MIDDLEWARE_CLASSES: [
+		drty.contrib.sessions.middleware.SessionMiddleware
+	],
 
 	ROOT_URLCONF: require('./urls')
 };
