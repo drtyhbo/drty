@@ -5,7 +5,4 @@
 
 <body>
 {% block body %}{% endblock %}
-<div class="footer">
-	<a href="{% url "about" %}">about</a>
-</div>
 </body>

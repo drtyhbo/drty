@@ -13,6 +13,10 @@
 		</tr>
 		</table>
 		No account? <a href="{% url "register" %}">register</a>!
+
+		<div class="footer">
+			<a href="{% url "about" %}">about</a>
+		</div>
 	</center>
 </form>
 {% endblock %}

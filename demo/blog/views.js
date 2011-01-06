@@ -5,7 +5,8 @@ exports.login = function(request, response) {
 	var form;
 	if (request.method == 'POST') {
 		form = new forms.LoginForm(request.POST);
-		form.clean();
+		if (form.clean()) {
+		}
 	} else {
 		form = new forms.LoginForm();
 	}
@@ -23,16 +24,35 @@ exports.logout = function(request, response) {
 }
 
 exports.register = function(request, response) {
+	function render(context) {
+		drty.template.loadAndRender('register.tpl', context, function(html) {
+			response.ok(html);
+		});
+	}
+
 	var form;
 	if (request.method == 'POST') {
 		form = new forms.RegisterForm(request.POST);
-		form.clean();
+		if (form.clean()) {
+			var username = form.cleanValues.username,
+				password = form.cleanValues.password,
+				email = form.cleanValues.email;
+
+			drty.contrib.auth.createUser(username, password, email, '', '', function(user) {
+				if (!user) {
+					render({
+						form: form,
+						error: "'" + username + "' has already been taken!"
+					});
+				} else {
+					response.redirect
+				}
+
+			});
+		}
 	} else {
 		form = new forms.RegisterForm();
 	}
-
-	drty.template.loadAndRender('register.tpl', {form: form}, function(html) {
-		response.ok(html);
-	});
 	
+	render({form: form});
 }
