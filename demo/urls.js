@@ -1,5 +1,6 @@
 var urls = require('drty').urls;
 
-exports.urlpatterns = urls.patterns('',
-	urls.url('^/blog/', require('./blog/urls'))
+exports.urlpatterns = urls.patterns(require('./blog/views'),
+	urls.url('^/login/$', 'loginView'),
+	urls.url('^/logout/$', 'logoutView')
 );

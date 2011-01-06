@@ -10,7 +10,7 @@ exports.settings = {
 		PORT: ''
 	},
 	TEMPLATE_DIRS: [
-		// ENTER TEMPLATE DIRECTORIES HERE
+		'templates'
 	],
 	INSTALLED_APPS: [
 		drty.contrib.sessions,
