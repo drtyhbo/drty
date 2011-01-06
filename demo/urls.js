@@ -8,7 +8,7 @@ exports.urlpatterns = urls.patterns(require('./blog/views'),
 );
 
 exports.urlpatterns.concat(urls.patterns(drty.views,
-	urls.url('^/media/(?P<path>.*)$', 'static', {
-		documentRoot: require('path').join(__dirname, 'media')
-	})
+	urls.url('^/media/(?P<path>.*)$', 'static', [
+		require('path').join(__dirname, 'media')
+	])
 ));
