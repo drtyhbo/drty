@@ -47,12 +47,11 @@ exports.register = function(request, response) {
 				} else {
 					response.redirect
 				}
-
 			});
+		} else {
+			render({form: form});
 		}
 	} else {
-		form = new forms.RegisterForm();
+		render({form: new forms.RegisterForm()});
 	}
-	
-	render({form: form});
 }
