@@ -5,10 +5,11 @@
 {% block body %}
 <form method="POST">
 	<center>
-		<table>
+		<h2>drty demo</h2>
+		<table cellspacing="3" class="login">
 		{{ form.asTable }}
-		<tr colspan="2">
-			<td><input type="submit" value="Login"></td>
+		<tr>
+			<td colspan="2" align="center"><input type="submit" value="Login"></td>
 		</tr>
 		</table>
 		No account? <a href="{% url "register" %}">register</a>!
