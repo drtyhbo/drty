@@ -1,6 +1,6 @@
 {% extends "base.tpl" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
 <form method="POST">
@@ -11,7 +11,7 @@
 			<td><input type="submit" value="Login"></td>
 		</tr>
 		</table>
-		No account? <a href="{% url "register" %}">register</a>!
+		Already have an account? <a href="{% url "login" %}">login</a>!
 	</center>
 </form>
 {% endblock %}
