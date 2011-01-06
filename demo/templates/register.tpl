@@ -5,13 +5,20 @@
 {% block body %}
 <form method="POST">
 	<center>
-		<table>
+		<h2>drty demo</h2>
+
+		<div class="error">{{ error }}</div>
+		<table class="register">
 		{{ form.asTable }}
-		<tr colspan="2">
-			<td><input type="submit" value="Login"></td>
+		<tr>
+			<td colspan="2" align="center"><input type="submit" value="Register"></td>
 		</tr>
 		</table>
 		Already have an account? <a href="{% url "login" %}">login</a>!
+
+		<div class="footer">
+			<a href="{% url "about" %}">about</a>
+		</div>
 	</center>
 </form>
 {% endblock %}

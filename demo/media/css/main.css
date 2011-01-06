@@ -1,0 +1,23 @@
+body {
+	font: 13px sans-serif;
+}
+
+.footer { text-align: center; }
+
+input {
+	border: 1px solid #999;
+	padding: 5px;
+	font: 13px sans-serif;
+}
+
+table.login, table.register { 
+	margin-bottom: 10px;
+}
+
+table.login td, table.register td {
+	padding: 5px;
+	font: 13px sans-serif;
+}
+
+div.error { color: red; margin-top: 5px; text-align: center; }
+.error input { border: 1px solid red; }

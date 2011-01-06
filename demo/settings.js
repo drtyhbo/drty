@@ -20,6 +20,9 @@ exports.settings = {
 	MIDDLEWARE_CLASSES: [
 		drty.contrib.sessions.middleware.SessionMiddleware
 	],
+	TEMPLATE_CONTEXT_PROCESSORS: [
+		require('./index').contextProcessor
+	],
 
 	ROOT_URLCONF: require('./urls')
 };
