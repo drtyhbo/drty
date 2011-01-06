@@ -2,6 +2,8 @@ body {
 	font: 13px sans-serif;
 }
 
+.footer { text-align: center; }
+
 table.login { margin-bottom: 10px; }
 
 table.login td {
