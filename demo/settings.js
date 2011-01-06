@@ -23,6 +23,8 @@ exports.settings = {
 	TEMPLATE_CONTEXT_PROCESSORS: [
 		require('./index').contextProcessor
 	],
+	
+	LOGIN_URL: '/login/',
 
 	ROOT_URLCONF: require('./urls')
 };

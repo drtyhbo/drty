@@ -2,25 +2,34 @@ var drty = require('drty'),
 	forms = require('./forms');
 
 exports.login = function(request, response) {
-	var form;
+	function render(context) {
+		drty.template.loadAndRender('login.tpl', context, function(html) {
+			response.ok(html);
+		});
+	}
+
 	if (request.method == 'POST') {
-		form = new forms.LoginForm(request.POST);
+		var form = new forms.LoginForm(request.POST);
 		if (form.clean()) {
+			var username = form.cleanValues.username,
+				password = form.cleanValues.password;
+
+			drty.contrib.auth.authenticate(username, password, function(user) {
+				if (!user) {
+					render({
+						form: form,
+						error: 'Invalid username or password'
+					});
+				} else {
+					response.redirect()
+				}
+			});
+		} else {
+			render({form: form});
 		}
 	} else {
-		form = new forms.LoginForm();
+		render({form: new forms.LoginForm()});
 	}
-
-	drty.template.loadAndRender('login.tpl', {form: form}, function(html) {
-		response.ok(html);
-	});
-}
-
-exports.logout = function(request, response) {
-	if (request.user) {
-		request.user.logout(request);
-	}
-	response.redirect(drty.urls.reverse('login'));
 }
 
 exports.register = function(request, response) {
@@ -30,9 +39,8 @@ exports.register = function(request, response) {
 		});
 	}
 
-	var form;
 	if (request.method == 'POST') {
-		form = new forms.RegisterForm(request.POST);
+		var form = new forms.RegisterForm(request.POST);
 		if (form.clean()) {
 			var username = form.cleanValues.username,
 				password = form.cleanValues.password,
@@ -55,3 +63,20 @@ exports.register = function(request, response) {
 		render({form: new forms.RegisterForm()});
 	}
 }
+
+exports.logout = [
+	drty.contrib.auth.loginRequired,
+	function(request, response) {
+		if (request.user) {
+			request.user.logout(request);
+		}
+		response.redirect(drty.urls.reverse('login'));
+	}
+];
+
+exports.home = [
+	drty.contrib.auth.loginRequired,
+	function(request, response) {
+		response.ok('home');
+	}
+];
