@@ -1,10 +1,11 @@
 var drty = require('drty'),
 	forms = require('./forms'),
-	models = require('./models');
+	models = require('./models'),
+	directToTemplate = drty.views.generic.simple.directToTemplate;
 
 exports.login = function(request, response) {
 	function render(context) {
-		drty.views.directToTemplate(request, response, 'login.tpl', context);
+		directToTemplate(request, response, 'login.tpl', context);
 	}
 
 	if (request.method == 'POST') {
@@ -34,7 +35,7 @@ exports.login = function(request, response) {
 
 exports.register = function(request, response) {
 	function render(context) {
-		drty.views.directToTemplate(request, response, 'register.tpl', context);
+		directToTemplate(request, response, 'register.tpl', context);
 	}
 
 	if (request.method == 'POST') {
@@ -75,7 +76,7 @@ exports.home = [
 	function(request, response) {
 		function loadBlogs() {
 			models.Blog.objects.filter({owner: request.user}).fetch(function(blogs) {
-				drty.views.directToTemplate(request, response, 'home.tpl', {
+				directToTemplate(request, response, 'home.tpl', {
 					blogs: blogs,
 					createBlogForm: createBlogForm
 				});
@@ -126,7 +127,7 @@ exports.blog = [
 	function(request, response) {
 		function render(form) {
 			models.Entry.objects.filter({blog: request.blog}).fetch(function(entries) {
-				drty.views.directToTemplate(request, response, 'blog.tpl', {
+				directToTemplate(request, response, 'blog.tpl', {
 					blog: request.blog,
 					entries: entries,
 					createEntryForm: form

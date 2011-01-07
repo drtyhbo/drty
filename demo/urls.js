@@ -1,13 +1,14 @@
 var drty = require('drty'),
-	urls = drty.urls;
+	urls = drty.urls,
+	views = require('./blog/views');
 
-exports.urlpatterns = urls.patterns(require('./blog/views'),
-	urls.url('^/login/$', 'login', 'login'),
-	urls.url('^/logout/$', 'logout', 'logout'),
-	urls.url('^/register/$', 'register', 'register'),
-	urls.url('^/home/$', 'home', 'home'),
-	urls.url('^/blog/(?P<blogId>[^/]*)/$', 'blog', 'blog'),
-	urls.url('^/media/(?P<path>.*)$', drty.views.static, 'media', [
+exports.urlpatterns = urls.patterns(
+	urls.url('^/login/$', views.login, 'login'),
+	urls.url('^/logout/$', views.logout, 'logout'),
+	urls.url('^/register/$', views.register, 'register'),
+	urls.url('^/home/$', views.home, 'home'),
+	urls.url('^/blog/(?P<blogId>[^/]*)/$', views.blog, 'blog'),
+	urls.url('^/media/(?P<path>.*)$', drty.views.static.serve, 'media', [
 		require('path').join(__dirname, 'media')
 	])
 );
