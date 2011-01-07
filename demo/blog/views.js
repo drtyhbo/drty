@@ -51,7 +51,7 @@ exports.register = function(request, response) {
 						error: "'" + username + "' has already been taken!"
 					});
 				} else {
-					response.redirect
+					response.redirect(drty.urls.reverse('login'));
 				}
 			});
 		} else {
@@ -86,13 +86,14 @@ exports.home = [
 			var createBlogForm = new forms.CreateBlogForm(request.POST);
 			if (createBlogForm.clean()) {
 				var blog = new models.Blog({
-					name: createBlogForm.cleanValues.name,
-					owner: request.user
+					title: createBlogForm.cleanValues.title,
+					isPublic: createBlogForm.cleanValues.isPublic,
+					owner: request.user,
 				}).save(function(blog) {
 					if (!blog) {
 						loadBlogs();
 					} else {
-						drty.urls.reverse('blog', blog.id);
+						response.redirect(drty.urls.reverse('blog', blog.id));
 					}				
 				});
 			} else {
@@ -123,17 +124,32 @@ function blogAccessRequired(request, response, next) {
 exports.blog = [
 	blogAccessRequired,
 	function(request, response) {
-		if (request.method == "POST") {
-			var createEntryForm = new forms.CreateEntryForm();
-		} else {
-			var createEntryForm = new forms.CreateEntryForm();
+		function render(form) {
+			models.Entry.objects.filter({blog: request.blog}).fetch(function(entries) {
+				drty.views.directToTemplate(request, response, 'blog.tpl', {
+					blog: request.blog,
+					entries: entries,
+					createEntryForm: form
+				});	
+			});
 		}
-		models.Entry.objects.filter({blog: request.blog}).fetch(function(entries) {
-			drty.views.directToTemplate(request, response, 'blog.tpl', {
-				blog: request.blog,
-				entries: entries,
-				createEntryForm: createEntryForm
-			});	
-		});
+
+		if (request.method == "POST") {
+			var form = new forms.CreateEntryForm(request.POST);
+			if (form.clean()) {
+				new models.Entry({
+					blog: request.blog,
+					title: form.cleanValues.title,
+					body: form.cleanValues.body
+				}).save(function(entry) {
+					render(new forms.CreateEntryForm());
+				});
+			} else {
+				render(form);
+			}
+		} else {
+			var form = new forms.CreateEntryForm();
+			render(form);
+		}
 	}
 ];

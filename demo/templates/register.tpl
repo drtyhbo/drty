@@ -15,10 +15,6 @@
 		</tr>
 		</table>
 		Already have an account? <a href="{% url "login" %}">login</a>!
-
-		<div class="footer">
-			<a href="{% url "about" %}">about</a>
-		</div>
 	</center>
 </form>
 {% endblock %}

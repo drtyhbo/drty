@@ -6,7 +6,8 @@ var Blog = exports.Blog = models.Model.extend({
 
 	owner: new models.ForeignKey(drty.contrib.auth.models.User),
 	createDate: new models.DateTimeField({autoNowAdd: true}),
-	isPublic: new models.BooleanField()
+	isPublic: new models.BooleanField(),
+	title: new models.CharField({maxLength: 128})
 });
 
 var Entry = exports.Entry = models.Model.extend({

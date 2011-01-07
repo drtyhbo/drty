@@ -3,17 +3,18 @@ body {
 	margin: 0px;
 }
 
-.content {
+.body {
 	width: 600px;
 	margin: 0 auto;
 }
 
+.content { margin-top: 10px; }
+
 .header {
-	padding: 5px; margin-bottom: 10px;
+	padding: 5px;
 	text-align: right;
 	border-bottom: 1px solid #ccc;
 }
-.footer { text-align: center; }
 
 input {
 	border: 1px solid #999;
@@ -28,7 +29,9 @@ table td {
 	font: 13px sans-serif;
 }
 
-.new_entry {
+.crumbs { padding-bottom: 5px; border-bottom: 1px solid #ccc; }
+
+.new_blog, .new_entry {
 	margin-top: 10px;
 	border-top: 1px solid #ccc;
 }
@@ -38,6 +41,11 @@ table td {
 .new_entry .label { width: 75px; }
 .new_entry input { width: 200px; }
 .new_entry textarea { width: 100%; height: 200px; }
+
+.entries { padding: 15px; }
+.entry { margin: 20px 0px; }
+.entry .title { font-weight: bold; font-size: 20px; }
+.entry .body { margin-top: 10px; }
 
 div.error { color: red; margin-top: 5px; text-align: center; }
 .error input { border: 1px solid red; }

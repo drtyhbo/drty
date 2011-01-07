@@ -23,7 +23,7 @@ exports.RegisterForm = forms.Form.extend({
 });
 
 exports.CreateBlogForm = forms.Form.extend({
-	name: new forms.CharField(),
+	title: new forms.CharField(),
 	isPublic: new forms.BooleanField({label: 'Public?'})
 });
 
