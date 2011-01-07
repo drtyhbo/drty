@@ -2,16 +2,13 @@ This license applies to all parts of drty that are not externally
 maintained libraries.  The externally maintained libraries used by drty
 are:
 
-  - json-template, located under lib/nachojs. This code is copyrighted
-    by Andy Chu. Released under an Apache 2.0 license.
+  - Simple JavaScript Inheritance, located under deps/class. This
+    code was released under MIT license by John Resig.
 
-  - mootools, located under lib/nachojs. This code is copyrighted
-    by Valerio Proietti. Released under an MIT license.
-
-  - json2, located under lib/nachojs. This code was released under
+  - json2, located under deps/json2. This code was released under
     public domain by Douglas Crockford.
 
-  - djangode, located under lib/djangode. This code is copyrighted
+  - djangode, located under deps/djangode. This code is copyrighted
     by Anders Hellerup Madsen and Simon Willisons. Released under a
     BSD license.
 
