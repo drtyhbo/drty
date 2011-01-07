@@ -21,3 +21,13 @@ exports.RegisterForm = forms.Form.extend({
 			widget: new forms.widgets.PasswordInput()
 		}),
 });
+
+exports.CreateBlogForm = forms.Form.extend({
+	name: new forms.CharField(),
+	isPublic: new forms.BooleanField({label: 'Public?'})
+});
+
+exports.CreateEntryForm = forms.Form.extend({
+	title: new forms.CharField(),
+	body: new forms.TextField()
+});

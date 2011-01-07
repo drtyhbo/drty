@@ -4,5 +4,10 @@
 </head>
 
 <body>
-{% block body %}{% endblock %}
+	<div class="content">
+		{% if request.user %}
+			<div class="header">Logged in as {{ request.user.username }}, <a href="{% url "logout" %}">logout</a></div>
+		{% endif %}
+{% block content %}{% endblock %}
+	</div>
 </body>

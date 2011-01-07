@@ -1,11 +1,10 @@
 var drty = require('drty'),
-	forms = require('./forms');
+	forms = require('./forms'),
+	models = require('./models');
 
 exports.login = function(request, response) {
 	function render(context) {
-		drty.template.loadAndRender('login.tpl', context, function(html) {
-			response.ok(html);
-		});
+		drty.views.directToTemplate(request, response, 'login.tpl', context);
 	}
 
 	if (request.method == 'POST') {
@@ -21,7 +20,8 @@ exports.login = function(request, response) {
 						error: 'Invalid username or password'
 					});
 				} else {
-					response.redirect()
+					user.login(request);
+					response.redirect(request.GET['next'] || drty.urls.reverse('home'));
 				}
 			});
 		} else {
@@ -34,9 +34,7 @@ exports.login = function(request, response) {
 
 exports.register = function(request, response) {
 	function render(context) {
-		drty.template.loadAndRender('register.tpl', context, function(html) {
-			response.ok(html);
-		});
+		drty.views.directToTemplate(request, response, 'register.tpl', context);
 	}
 
 	if (request.method == 'POST') {
@@ -64,19 +62,78 @@ exports.register = function(request, response) {
 	}
 }
 
-exports.logout = [
-	drty.contrib.auth.loginRequired,
-	function(request, response) {
-		if (request.user) {
-			request.user.logout(request);
-		}
-		response.redirect(drty.urls.reverse('login'));
+exports.logout = function(request, response) {
+	if (request.user) {
+		request.user.logout(request);
 	}
-];
+	response.redirect(drty.urls.reverse('login'));
+}
+
 
 exports.home = [
 	drty.contrib.auth.loginRequired,
 	function(request, response) {
-		response.ok('home');
+		function loadBlogs() {
+			models.Blog.objects.filter({owner: request.user}).fetch(function(blogs) {
+				drty.views.directToTemplate(request, response, 'home.tpl', {
+					blogs: blogs,
+					createBlogForm: createBlogForm
+				});
+			});
+		}
+
+		if (request.method == "POST") {
+			var createBlogForm = new forms.CreateBlogForm(request.POST);
+			if (createBlogForm.clean()) {
+				var blog = new models.Blog({
+					name: createBlogForm.cleanValues.name,
+					owner: request.user
+				}).save(function(blog) {
+					if (!blog) {
+						loadBlogs();
+					} else {
+						drty.urls.reverse('blog', blog.id);
+					}				
+				});
+			} else {
+				loadBlogs();
+			}
+		} else {
+			var createBlogForm = new forms.CreateBlogForm();
+			loadBlogs();
+		}
+	}
+];
+
+function blogAccessRequired(request, response, next) {
+	models.Blog.objects.filter({id: request.params.blogId}).fetchOne(function(blog) {
+		if (!blog) {
+			response.redirect(drty.urls.reverse('home'));
+		} else {
+			if (!blog.isPublic && (!request.user || blog.owner.id != request.user.id)) {
+				response.redirect(drty.urls.reverse('home'));
+			} else {
+				request.blog = blog;
+				next();
+			}
+		}
+	});
+}
+
+exports.blog = [
+	blogAccessRequired,
+	function(request, response) {
+		if (request.method == "POST") {
+			var createEntryForm = new forms.CreateEntryForm();
+		} else {
+			var createEntryForm = new forms.CreateEntryForm();
+		}
+		models.Entry.objects.filter({blog: request.blog}).fetch(function(entries) {
+			drty.views.directToTemplate(request, response, 'blog.tpl', {
+				blog: request.blog,
+				entries: entries,
+				createEntryForm: createEntryForm
+			});	
+		});
 	}
 ];

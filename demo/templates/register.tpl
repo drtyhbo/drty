@@ -2,7 +2,7 @@
 
 {% block title %}Register{% endblock %}
 
-{% block body %}
+{% block content %}
 <form method="POST">
 	<center>
 		<h2>drty demo</h2>

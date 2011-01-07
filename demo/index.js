@@ -1,5 +1,6 @@
-exports.contextProcessor = function() {
+exports.contextProcessor = function(request) {
 	return {
-		MEDIA_URL: '/media/'
+		MEDIA_URL: '/media/',
+		request: request
 	};
 }

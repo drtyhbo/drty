@@ -18,7 +18,8 @@ exports.settings = {
 		require('./blog')
 	],
 	MIDDLEWARE_CLASSES: [
-		drty.contrib.sessions.middleware.SessionMiddleware
+		drty.contrib.sessions.middleware.SessionMiddleware,
+		drty.contrib.auth.middleware.AuthenticationMiddleware
 	],
 	TEMPLATE_CONTEXT_PROCESSORS: [
 		require('./index').contextProcessor

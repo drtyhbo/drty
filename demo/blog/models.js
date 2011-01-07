@@ -4,7 +4,9 @@ var drty = require('drty'),
 var Blog = exports.Blog = models.Model.extend({
 	tableName: 'blogs',
 
-	owner: new models.ForeignKey(drty.contrib.auth.models.User)
+	owner: new models.ForeignKey(drty.contrib.auth.models.User),
+	createDate: new models.DateTimeField({autoNowAdd: true}),
+	isPublic: new models.BooleanField()
 });
 
 var Entry = exports.Entry = models.Model.extend({
@@ -12,5 +14,6 @@ var Entry = exports.Entry = models.Model.extend({
 
 	blog: new models.ForeignKey(Blog),
 	title: new models.CharField({maxLength: 128}),
-	body: new models.TextField()
+	body: new models.TextField(),
+	postDate: new models.DateTimeField({autoNowAdd: true})
 });

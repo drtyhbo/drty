@@ -5,7 +5,8 @@ exports.urlpatterns = urls.patterns(require('./blog/views'),
 	urls.url('^/login/$', 'login', 'login'),
 	urls.url('^/logout/$', 'logout', 'logout'),
 	urls.url('^/register/$', 'register', 'register'),
-	urls.url('^/home/$', 'home', 'home')
+	urls.url('^/home/$', 'home', 'home'),
+	urls.url('^/blog/(?P<blogId>[^/]*)/$', 'blog', 'blog')
 );
 
 exports.urlpatterns.concat(urls.patterns(

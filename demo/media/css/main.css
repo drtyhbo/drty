@@ -1,7 +1,18 @@
 body {
 	font: 13px sans-serif;
+	margin: 0px;
 }
 
+.content {
+	width: 600px;
+	margin: 0 auto;
+}
+
+.header {
+	padding: 5px; margin-bottom: 10px;
+	text-align: right;
+	border-bottom: 1px solid #ccc;
+}
 .footer { text-align: center; }
 
 input {
@@ -10,14 +21,23 @@ input {
 	font: 13px sans-serif;
 }
 
-table.login, table.register { 
-	margin-bottom: 10px;
-}
+table { margin-bottom: 10px; }
 
-table.login td, table.register td {
+table td {
 	padding: 5px;
 	font: 13px sans-serif;
 }
+
+.new_entry {
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+}
+
+.new_entry table { width: 100%; }
+
+.new_entry .label { width: 75px; }
+.new_entry input { width: 200px; }
+.new_entry textarea { width: 100%; height: 200px; }
 
 div.error { color: red; margin-top: 5px; text-align: center; }
 .error input { border: 1px solid red; }
