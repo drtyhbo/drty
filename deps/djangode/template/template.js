@@ -372,7 +372,8 @@ common.mixin(Template.prototype, {
         this.node_list.evaluate(context, function (error, rendered) {
             if (error) { throw error; }
             if (context.extends) {
-				loadCallback(context.extends, context, callback);
+				var drty = require('drty');
+				drty.template.loadAndRender(context.extends, context, callback);
             } else {
                 callback(rendered);
             }

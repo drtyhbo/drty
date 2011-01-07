@@ -3,35 +3,43 @@ var drty = require('drty'),
 	models = require('./models'),
 	directToTemplate = drty.views.generic.simple.directToTemplate;
 
-exports.login = function(request, response) {
-	function render(context) {
-		directToTemplate(request, response, 'login.tpl', context);
-	}
-
-	if (request.method == 'POST') {
-		var form = new forms.LoginForm(request.POST);
-		if (form.clean()) {
-			var username = form.cleanValues.username,
-				password = form.cleanValues.password;
-
-			drty.contrib.auth.authenticate(username, password, function(user) {
-				if (!user) {
-					render({
-						form: form,
-						error: 'Invalid username or password'
-					});
-				} else {
-					user.login(request);
-					response.redirect(request.GET['next'] || drty.urls.reverse('home'));
-				}
-			});
+exports.login = [
+	function(request, response, next) {
+		if (request.user) {
+			response.redirect(drty.urls.reverse('home'));
 		} else {
-			render({form: form});
+			next();
 		}
-	} else {
-		render({form: new forms.LoginForm()});
-	}
-}
+	},
+	function(request, response) {
+		function render(context) {
+			directToTemplate(request, response, 'login.tpl', context);
+		}
+	
+		if (request.method == 'POST') {
+			var form = new forms.LoginForm(request.POST);
+			if (form.clean()) {
+				var username = form.cleanValues.username,
+					password = form.cleanValues.password;
+
+				drty.contrib.auth.authenticate(username, password, function(user) {
+					if (!user) {
+						render({
+							form: form,
+							error: 'Invalid username or password'
+						});
+					} else {
+						user.login(request);
+						response.redirect(request.GET['next'] || drty.urls.reverse('home'));
+					}
+				});
+			} else {
+				render({form: form});
+			}
+		} else {
+			render({form: new forms.LoginForm()});
+		}
+	}];
 
 exports.register = function(request, response) {
 	function render(context) {

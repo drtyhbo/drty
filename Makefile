@@ -1,5 +1,5 @@
 noop:
 	echo "Usage: make tests"
 
-tests:
+test:
 	find lib -name "*.test.js" -exec node {} \;
