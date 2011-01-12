@@ -22,8 +22,8 @@ exports.login = [
 				var username = form.cleanValues.username,
 					password = form.cleanValues.password;
 
-				drty.contrib.auth.authenticate(username, password, function(user) {
-					if (!user) {
+				drty.contrib.auth.authenticate(username, password, function(error, user) {
+					if (error) {
 						render({
 							form: form,
 							error: 'Invalid username or password'
@@ -53,8 +53,8 @@ exports.register = function(request, response) {
 				password = form.cleanValues.password,
 				email = form.cleanValues.email;
 
-			drty.contrib.auth.createUser(username, password, email, '', '', function(user) {
-				if (!user) {
+			drty.contrib.auth.createUser(username, password, email, '', '', function(error, user) {
+				if (error) {
 					render({
 						form: form,
 						error: "'" + username + "' has already been taken!"
@@ -83,7 +83,7 @@ exports.home = [
 	drty.contrib.auth.loginRequired,
 	function(request, response) {
 		function loadBlogs() {
-			models.Blog.objects.filter({owner: request.user}).fetch(function(blogs) {
+			models.Blog.objects.filter({owner: request.user}).fetch(function(error, blogs) {
 				directToTemplate(request, response, 'home.tpl', {
 					blogs: blogs,
 					createBlogForm: createBlogForm
@@ -98,12 +98,12 @@ exports.home = [
 					title: createBlogForm.cleanValues.title,
 					isPublic: createBlogForm.cleanValues.isPublic,
 					owner: request.user,
-				}).save(function(blog) {
-					if (!blog) {
+				}).save(function(error, blog) {
+					if (error) {
 						loadBlogs();
 					} else {
 						response.redirect(drty.urls.reverse('blog', blog.id));
-					}				
+					}
 				});
 			} else {
 				loadBlogs();
@@ -116,8 +116,8 @@ exports.home = [
 ];
 
 function blogAccessRequired(request, response, next) {
-	models.Blog.objects.filter({id: request.params.blogId}).fetchOne(function(blog) {
-		if (!blog) {
+	models.Blog.objects.filter({id: request.params.blogId}).fetchOne(function(error, blog) {
+		if (error) {
 			response.redirect(drty.urls.reverse('home'));
 		} else {
 			if (!blog.isPublic && (!request.user || blog.owner.id != request.user.id)) {
@@ -134,7 +134,7 @@ exports.blog = [
 	blogAccessRequired,
 	function(request, response) {
 		function render(form) {
-			models.Entry.objects.filter({blog: request.blog}).fetch(function(entries) {
+			models.Entry.objects.filter({blog: request.blog}).fetch(function(error, entries) {
 				directToTemplate(request, response, 'blog.tpl', {
 					blog: request.blog,
 					entries: entries,
@@ -150,7 +150,7 @@ exports.blog = [
 					blog: request.blog,
 					title: form.cleanValues.title,
 					body: form.cleanValues.body
-				}).save(function(entry) {
+				}).save(function(error, entry) {
 					render(new forms.CreateEntryForm());
 				});
 			} else {
