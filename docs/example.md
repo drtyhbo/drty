@@ -24,55 +24,7 @@ Let's test this shiz out.
 
 Let's go through the files real quick.
 
-### settings.js
 
-Open your settings.js file. Starting on line 3:
-
-    exports.settings = {
-
-drty expects the settings hash to be exported from your settings file as `settings`.
-
-    DATABASE: {
-    	ENGINE: drty.db.backends.MySQL,
-    	NAME: 'DATABASE NAME',
-    	USER: 'USERNAME',
-    	PASSWORD: 'PASSWORD',
-    	HOST: '',
-    	PORT: ''
-    }
-
-At the moment, we don't have a database specified. When we do, the settings will go in DATABASE.
-
-    TEMPLATE_DIRS: [
-    	// ENTER TEMPLATE DIRECTORIES HERE
-    ]
-
-The TEMPLATE_DIRS array contains the directories drty will search in when looking for template files. We'll fill this in later.
-
-    INSTALLED_APPS: [
-    	// drty.contrib.sessions
-    ]
-
-An app in drty is a grouping of related urls, views, forms, models and middleware that accomplishes a specific purpose. For example, drty comes packaged with an auth app (drty.contrib.auth) that implements basic user authentication. This package has a User model (drty.contrib.auth.models.User), as well as authentication middleware (drty.contrib.auth.middleware.AuthMiddleware).
-
-    MIDDLEWARE_CLASSES: [
-    	// drty.contrib.sessions.middleware.SessionMiddleware
-    ]
-
-drty supports both request and response middleware. Request middleware is executed in the order that it is listed in this array. Response middleware is executed in the opposite order. For example, if you have session and auth middleware installed, as in:
-
-    MIDDLEWARE_CLASSES: [
-    	drty.contrib.sessions.middleware.SessionMiddleware,
-    	drty.contrib.auth.middleware.AuthMiddleware
-    ]
-
-The execution of a request will look like:
-
-SessionMiddleware -> AuthMiddleware -> Your custom view -> AuthMiddleware -> SessionMiddleware
-
-    ROOT_URLCONF: require('./urls').urlpatterns
-
-This line tells drty about your url patterns. The settings and urls are split into seperate files, by default, to keep things clean, but this separation is not required.
 
 ### urls.js
 
