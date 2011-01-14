@@ -25,4 +25,6 @@ Installation is easy
 
 ## EXAMPLE
 
-Included in the source tree is an example/ folder that contains a simple blogging platform written using drty. Please check out the tutorial to get an undrestanding for the basics of drty.
+Included in the source tree is an example/ folder that contains a simple blogging platform written using drty. To run the example, go to the examples directory and run
+
+    $ node manage.js runserver
