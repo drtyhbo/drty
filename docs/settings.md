@@ -1,3 +1,5 @@
+## Settings
+
 Let's go over the parts of the settings file.
 
     exports.settings = {
@@ -32,7 +34,7 @@ The `TEMPLATE_DIRS` array contains a list of directories that drty will look in 
             // drty.contrib.sessions
         ]
 
-The `INSTALLED_APPS` array contains the list of applications that drty will load. Click here for more information about applications.
+The `INSTALLED_APPS` array contains the list of applications that drty will load. Click here for more information about apps.
 
         MIDDLEWARE_CLASSES: [
             // drty.contrib.sessions.middleware.SessionMiddleware
