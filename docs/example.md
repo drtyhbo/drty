@@ -4,14 +4,14 @@ This is a brief tutorial to introduce you to creating a website with drty. By th
 
 ### startproject
 
-The first step to building a drty site is to create a new project. Luckily, drty comes prepackaged with a nifty binary, `drty-admin` to help you get started. To create your project, type:
+The first step to building a site with drty is to create a new project. Luckily, drty comes prepackaged with a nifty binary, `drty-admin`, to help you get started. Type:
 
 `drty-admin startproject blog`
 
 This will create a "blog" directory containing some starter js files.
 
 * settings.js - This file contains configuration parameters for your site. At the moment, your settings file isn't doing much, but we'll be changing that soon enough!
-* urls.js - This file will eventually contain url pattern matching logic.
+* urls.js - This file will eventually contain url pattern matching logic for the drty request router.
 * manage.js - This file is the starting point for managing your project. Running `node manage.js` will give you a list of available commands.
 
 ### runserver
@@ -26,15 +26,11 @@ Let's go through the files real quick.
 
 ### settings.js
 
-Open your settings.js file. Starting on line 1:
-
-    var drty = require('drty');
-
-Thi line loads the drty library into `drty`.
+Open your settings.js file. Starting on line 3:
 
     exports.settings = {
 
-This line is required because drty expects to find an export name settings when it calls `require()` on your settings.js file.
+drty expects the settings hash to be exported from your settings file as `settings`.
 
     DATABASE: {
     	ENGINE: drty.db.backends.MySQL,
@@ -45,103 +41,70 @@ This line is required because drty expects to find an export name settings when 
     	PORT: ''
     }
 
-At the moment, we don't have a database specified. When we do, the settings will go here.
+At the moment, we don't have a database specified. When we do, the settings will go in DATABASE.
 
     TEMPLATE_DIRS: [
     	// ENTER TEMPLATE DIRECTORIES HERE
     ]
 
-drty supports template file loading and rendering. This array contains a list of directories in which you would like drty to search for your template files. We'll fill this in later as well.
+The TEMPLATE_DIRS array contains the directories drty will search in when looking for template files. We'll fill this in later.
 
     INSTALLED_APPS: [
     	// drty.contrib.sessions
     ]
 
-An app in drty is a grouping of related urls, views, forms, models and middleware that accomplishes a specific purpose. For example, drty comes packaged with an auth app (drty.contrib.auth) that implements basic user authentication. This package has a User model, as well as authentication middleware. There's also a half finished app called adminthat will provide basic web-based administration of your site (when completed).
+An app in drty is a grouping of related urls, views, forms, models and middleware that accomplishes a specific purpose. For example, drty comes packaged with an auth app (drty.contrib.auth) that implements basic user authentication. This package has a User model (drty.contrib.auth.models.User), as well as authentication middleware (drty.contrib.auth.middleware.AuthMiddleware).
 
     MIDDLEWARE_CLASSES: [
     	// drty.contrib.sessions.middleware.SessionMiddleware
     ]
 
-drty supports both request and response middleware. Request middleware is executed in the order that it is listed in this array. Response middleware is executed in the opposite order. For example, if you have session and auth middleware installed as in:
+drty supports both request and response middleware. Request middleware is executed in the order that it is listed in this array. Response middleware is executed in the opposite order. For example, if you have session and auth middleware installed, as in:
 
     MIDDLEWARE_CLASSES: [
     	drty.contrib.sessions.middleware.SessionMiddleware,
     	drty.contrib.auth.middleware.AuthMiddleware
     ]
 
-The execution will look like this:
+The execution of a request will look like:
 
 SessionMiddleware -> AuthMiddleware -> Your custom view -> AuthMiddleware -> SessionMiddleware
 
-    ROOT_URLCONF: require('./urls')
+    ROOT_URLCONF: require('./urls').urlpatterns
 
-This line tells drty to use the url patterns in your urls.js file. In actuality, you could copy and paste the urlpatterns export of urls.js in place of this require as in:
-
-    ROOT_URLCONF: {
-        urlpatterns: drty.urls.patterns(
-	        drty.urls.url('^/$', drty.views.generic.simple.helloWorld)
-	    )
-    }
-
-and everything would still work a-ok. The settings and urls are split into separate files to keep things clean.
+This line tells drty about your url patterns. The settings and urls are split into seperate files, by default, to keep things clean, but this separation is not required.
 
 ### urls.js
 
-Open your urls.js file. Starting on line 1:
+Open your urls.js file. Starting on line 4:
 
-    var drty = require('drty'),
+	exports.urlpatterns = urls.patterns(
+	        urls.url('^/$', drty.views.generic.simple.helloWorld)
+	);
 
-This line loads the drty library into `drty`.
+Patterns are created using the `drty.urls.patterns` function. The declaration is:
 
-    urls = drty.urls;
+    function patterns(url1, url2, url3, url4, ...) { ... }
 
-This line aliases `drty.urls` to `urls` so our code is shorter!
+Where each url pattern is passed in as a parameter. Each url must be created using the `drty.urls.url` function. The declaration for url is:
 
-    exports.urlpatterns = urls.patterns(
-        urls.url('^/$', drty.views.generic.simple.helloWorld)
-    );
+    function url(pattern, view, name, parameters) { ... }
 
-Aight, drty expects the url patterns to be in a hash it expects to find a urlpatterns export. For example, when drty loads your settings.js file and parses the ROOT_URLCONF parameter, it will expect to f
+`pattern` is a regular expression that drty will match against when deciding where to route a request.
+`view` is the function that will be executed when this pattern gets matched.
+`name` name is the name used to identify this pattern. We'll learn more about name later.
+`paramaters` is an array of parameters that will be passed to your view when it's called.
 
-    DATABASE: {
-    	ENGINE: drty.db.backends.MySQL,
-    	NAME: 'DATABASE NAME',
-    	USER: 'USERNAME',
-    	PASSWORD: 'PASSWORD',
-    	HOST: '',
-    	PORT: ''
+The provided patterns() call matches one, and only one url: /. When you request http://127.0.0.1:8080/, drty will route the request to the `drty.views.generic.simple.helloWorld` function. Let's take a look at that function.
+
+    helloWorld: function(request, response) {
+        response.ok('<center><h2>It just works!</h2></center>');
     }
 
-At the moment, we don't have a database specified. When we do, the settings will go here.
+Every view function is passed at least a request and a response parameter. The request parameter contains the following parameters:
 
-    TEMPLATE_DIRS: [
-    	// ENTER TEMPLATE DIRECTORIES HERE
-    ]
-
-drty supports template file loading and rendering. This array contains a list of directories in which you would like drty to search for your template files. We'll fill this in later as well.
-
-    INSTALLED_APPS: [
-    	// drty.contrib.sessions
-    ]
-
-An app in drty is a grouping of related urls, views, forms, models and middleware that accomplishes a specific purpose. For example, drty comes packaged with an auth app (drty.contrib.auth) that implements basic user authentication. This package has a User model, as well as authentication middleware. There's also a half finished app called adminthat will provide basic web-based administration of your site (when completed).
-
-    MIDDLEWARE_CLASSES: [
-    	// drty.contrib.sessions.middleware.SessionMiddleware
-    ]
-
-drty supports both request and response middleware. Request middleware is executed in the order that it is listed in this array. Response middleware is executed in the opposite order. For example, if you have session and auth middleware installed as in:
-
-    MIDDLEWARE_CLASSES: [
-    	drty.contrib.sessions.middleware.SessionMiddleware,
-    	drty.contrib.auth.middleware.AuthMiddleware
-    ]
-
-The execution will look like this:
-
-SessionMiddleware -> AuthMiddleware -> Your custom view -> AuthMiddleware -> SessionMiddleware
-
-    ROOT_URLCONF: require('./urls')
-
-This line tells drty to start looking in your urls.js file for url patterns.
+`url` contains the request url.
+`method` contains the request method. Either GET or POST.
+`cookies` a hash of cookies passed into the request.
+`GET` a hash of GET parameters.
+`POST` a hash of POST parameters.
