@@ -25,6 +25,15 @@ Installation is easy
 
 ## EXAMPLE
 
-Included in the source tree is an example/ folder that contains a simple blogging platform written using drty. To run the example, go to the examples directory and run
+Included in the source tree is an example/ folder that contains a simple blogging platform written using
+drty. To run the example, open up mysql as administrator (root), and type the following:
 
+    create database demo;
+    grant all on demo.* to 'demo'@'localhost' identified by 'demo';
+
+Then, go to the examples/ directory and run.
+
+    $ node manage.js syncdb
     $ node manage.js runserver
+
+Now open a browser to http://localhost:8080/login/.
