@@ -1,23 +1,14 @@
 var drty = require('drty'),
-	urls = drty.urls,
+	patterns = drty.urls.patterns,
+	url = drty.urls.url,
 	views = require('./blog/views');
 
-exports.urlpatterns = urls.patterns(
-	/* Matches /login/. Renders the login page. */
-	urls.url('^/login/$', views.login, 'login'),
-	/* Matches /logout/. Renders the logout page. */
-	urls.url('^/logout/$', views.logout, 'logout'),
-	/* Matches /register/. Renders the register page. */
-	urls.url('^/register/$', views.register, 'register'),
-	/* Matches /home/. Renders the home page. */
-	urls.url('^/home/$', views.home, 'home'),
-	/* Matches /blog/* /. Renders the blog page.
-	   Adds the ... part to the request.params object as blogId. */
-	urls.url('^/blog/(?P<blogId>[^/]*)/$', views.blog, 'blog'),
-	/* Matches /media/*. Serves a static file.
-	   Adds the * part to the request.params object as path.
-	   Passes the path to the media directory as an extra parameter to the view. */
-	urls.url('^/media/(?P<path>.*)$', drty.views.static.serve, 'media', [
-		require('path').join(__dirname, 'media')
-	])
+exports.urlpatterns = patterns(
+	url('^/login/$', 'login', views.login),
+	url('^/logout/$', 'logout', views.logout),
+	url('^/register/$', 'register', views.register),
+	url('^/home/$', 'home', views.home),
+	url('^/blog/(?P<blogId>[^/]*)/$', 'blog', views.blog),
+	url('^/media/(?P<path>.*)$', drty.views.static.serve, 
+		require('path').join(__dirname, 'media'))
 );
