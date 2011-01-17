@@ -41,7 +41,7 @@ exports.login = [
 					password = form.cleanValues.password;
 
 				/* authenticate checks the db for the specified username/password combination. */
-				drty.contrib.auth.authenticate(username, password, function(error, user) {
+				drty.contrib.auth.models.User.authenticate(username, password, function(error, user) {
 					/* user not found or invalid username/password. */
 					if (error) {
 						render({
@@ -80,7 +80,7 @@ exports.register = function(request, response) {
 
 			/* createUser takes a username, password and email address and adds a new user
 			   to the database. Passes the new user object in the callback. */
-			drty.contrib.auth.createUser(username, password, email, '', '', function(error, user) {
+			drty.contrib.auth.models.User.create(username, password, email, '', '', function(error, user) {
 				if (error) {
 					render({
 						form: form,
