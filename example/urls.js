@@ -8,7 +8,7 @@ exports.urlpatterns = patterns(
 	url('^/logout/$', 'logout', views.logout),
 	url('^/register/$', 'register', views.register),
 	url('^/home/$', 'home', views.home),
-	url('^/blog/(?P<blogId>[^/]*)/$', 'blog', views.blog),
-	url('^/media/(?P<path>.*)$', drty.views.static.serve, 
+	url('^/blog/:blogId/$', 'blog', views.blog),
+	url('^/media/(?P<path>.+)$', drty.views.static.serve, 
 		require('path').join(__dirname, 'media'))
 );
