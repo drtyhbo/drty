@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="{MEDIA_URL}css/admin.css">
+	<link rel="stylesheet" type="text/css" href="{% url "__adminMedia" "css/admin.css" %}">
 </head>
 
 <body>
@@ -11,13 +11,13 @@
 				<tr class="title">
 					<td colspan="2">Drty Admin</td>
 				</tr>
-				{.section error}
+				{% if error %}
 				<tr>
-					<td colspan="2" align="center" class="error">{error}</td>
+					<td colspan="2" align="center" class="error">{{error}}</td>
 				</tr>
-				{.end}
+				{% endif %}
 				<tr>
-					<td>Username</td><td><input type="text" name="username" value="{username}"></td>
+					<td>Username</td><td><input type="text" name="username" value="{{username}}"></td>
 				</tr><tr>
 					<td>Password</td><td><input type="password" name="password"></td>
 				</tr><tr>
