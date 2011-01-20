@@ -107,6 +107,8 @@ span.error {
 	display: block;
 	color: red;
 }
+
+div.error { color: red; }
 .error select, .error input, .error textarea {
 	border: 1px solid red;
 }
