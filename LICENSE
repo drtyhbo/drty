@@ -5,9 +5,6 @@ are:
   - Simple JavaScript Inheritance, located under lib/deps/class. This
     code was released under MIT license by John Resig.
 
-  - json2, located under lib/deps/json2. This code was released under
-    public domain by Douglas Crockford.
-
   - djangode, located under lib/deps/djangode. This code is copyrighted
     by Anders Hellerup Madsen and Simon Willisons. Released under a
     BSD license.
