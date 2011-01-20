@@ -1,36 +1,29 @@
 {% extends BASE %}
-<html>
 
-<head>
-	<link rel="stylesheet" type="text/css" href="{MEDIA_URL}css/admin.css">
-</head>
-
-<body>
+{% block body %}
 	<div class="header">
 		<span class="title">Drty Administration</span>
-		<span class="welcome">Welcome, <b>{user.username}</b>. <a href="{.call urlreverse __adminLogout}">Log out</a></span>
+		<span class="welcome">Welcome, <b>{{ request.user.username }}</b>. <a href="{% url "__adminLogout" %}">Log out</a></span>
 	</div>
 	<div class="crumbs">
-		<a href="{.call urlreverse __adminHome}">Home</a> &rsaquo; {model}
+		<a href="{% url "__adminHome" %}">Home</a> &rsaquo; {{ modelName }}
 	</div>
 
 	<div class="content">
-		<h3>Select {model} to change</h3>
+		<h3>Select {{ modelName }} to change</h3>
 		<div class="items">
 		<table cellspacing="0">
 		<tr>
 			<td class="item_id">Id</td>
 			<td class="item_name">Name</td>
 		</tr>
-		{.repeated section items}
+		{% for item in items %}
 			<tr>
-				<td valign="top"><a href="{.call urlreverse __adminChange model id }">{id}</a></td>
-				<td valign="top">{@|ellipsize 256}</td>
+				<td valign="top"><a href="{% url "__adminChange" modelName,item.id %}">{{ item.id }}</a></td>
+				<td valign="top">{{ item.toString }}</td>
 			</tr>
-		{.end}
+		{% endfor %}
 		</table>
 		</div>
 	</div>
-</body>
-
-</html>
+{% endblock %}

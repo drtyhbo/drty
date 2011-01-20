@@ -3,7 +3,7 @@
 {% block body %}
 	<div class="header">
 		<span class="title">Drty Administration</span>
-		<span class="welcome">Welcome, <b>{{ request.user.username }}</b>. <a href="{.call urlreverse __adminLogout}">Log out</a></span>
+		<span class="welcome">Welcome, <b>{{ request.user.username }}</b>. <a href="{% url "__adminLogout" %}">Log out</a></span>
 	</div>
 
 	<div class="content">

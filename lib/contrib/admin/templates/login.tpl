@@ -1,3 +1,5 @@
+{% extends BASE %}
+
 {% block body %}
 	<center>
 		<form method="POST">
