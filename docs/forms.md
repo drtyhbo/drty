@@ -1,6 +1,9 @@
-## Forms
+forms -- drty.forms
+====================================
 
-Extend drty.forms.Form with the desired form fields. Example:
+The Form object gives you a super easy way to create and manage HTML forms.
+
+To use forms, extend drty.forms.Form with the desired fields as members. For example:
 
     var forms = drty.forms;
     var NewForm = forms.Form.extend({
@@ -14,7 +17,7 @@ Extend drty.forms.Form with the desired form fields. Example:
     	age: new forms.IntegerField()
     });
 
-K, to create a blank instance of your form, do:
+To create a blank instance of your form, do:
 
     var form = new NewForm();
 
