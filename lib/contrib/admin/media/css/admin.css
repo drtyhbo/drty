@@ -103,6 +103,8 @@ select, input, textarea {
 	font-size: 13px;
 }
 
+.help_text { margin-left: 10px; }
+
 span.error {
 	display: block;
 	color: red;

@@ -11,6 +11,7 @@ By 0.2.0:
  - dbColumn
  - dbIndex
  - editable
+ - helpText
 * All form fields implemented
 * All form field options implemented
 * Template syntax should be the same as Django
