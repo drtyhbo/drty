@@ -88,10 +88,8 @@ By 0.2.0:
     * validators
     * localize
 
-* Template syntax should be the same as Django
-* Everything should have unit tests
-* Simplify view code -- come up with a simplified structure
-* Implement fixtures
-* Implement custom commands for apps
-* Finish admin contrib
-* Allow for named apps
+* Template syntax be identical to Django
+* Unit tests for everything except contrib
+* Fixtures
+* Custom commands for apps
+* drty.contrib.admin
