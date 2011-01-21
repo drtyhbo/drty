@@ -13,6 +13,9 @@ By 0.2.0:
  - editable
  - helpText
  - unique
+ - verboseName
+ - autoNow
+ - autoNowAdd
 * All form fields implemented
 * All form field options implemented
 * Template syntax should be the same as Django
