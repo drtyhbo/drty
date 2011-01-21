@@ -10,6 +10,7 @@ By 0.2.0:
  - choices
  - dbColumn
  - dbIndex
+ - editable
 * All form fields implemented
 * All form field options implemented
 * Template syntax should be the same as Django
