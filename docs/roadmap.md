@@ -6,6 +6,8 @@ By 0.2.0:
 
 * All model fields implemented
 * All model field options implemented
+ - blank
+ - choices
  - dbColumn
  - dbIndex
 * All form fields implemented
