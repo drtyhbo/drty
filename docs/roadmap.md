@@ -63,9 +63,9 @@ By 0.2.0:
     * DecimalField
     * FileField
     * FilePathField
-    * FloatField
+    * ✓ FloatField
     * ImageField
-    * IPAddressField
+    * ✓ IPAddressField
     * MultipleChoiceField
     * NullBooleanField
     * RegexField
