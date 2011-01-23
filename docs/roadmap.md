@@ -67,7 +67,7 @@ By 0.2.0:
     * ImageField
     * ✓ IPAddressField
     * MultipleChoiceField
-    * NullBooleanField
+    * ✓ NullBooleanField
     * RegexField
     * SlugField
     * TimeField
