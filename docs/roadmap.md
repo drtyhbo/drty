@@ -72,11 +72,6 @@ By 0.2.0:
     * SlugField
     * TimeField
     * URLField
-    * ComboField
-    * MultiValueField
-    * SplitDateTimeField
-    * ModelChoiceField
-    * ModelMultipleChoiceField
 
 * All form field options implemented (goal 1/30):
     * ✓ required
