@@ -59,7 +59,7 @@ By 0.2.0:
     * ✓ EmailField
     * TypedChoiceField
     * DateField
-    * DateTimeField
+    * ✓ DateTimeField
     * DecimalField
     * FileField
     * FilePathField
