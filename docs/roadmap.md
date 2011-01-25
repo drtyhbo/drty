@@ -66,12 +66,12 @@ By 0.2.0:
     * ✓ FloatField
     * ImageField
     * ✓ IPAddressField
-    * MultipleChoiceField
+    * ✓ MultipleChoiceField
     * ✓ NullBooleanField
-    * RegexField
+    * ✓ RegexField
     * SlugField
-    * TimeField
-    * URLField
+    * ✓ TimeField
+    * ✓ URLField
 
 * All form field options implemented (goal 1/30):
     * ✓ required
