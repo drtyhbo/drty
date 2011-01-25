@@ -61,17 +61,17 @@ By 0.2.0:
     * ✓ DateField
     * ✓ DateTimeField
     * ✓ DecimalField
-    * FileField
-    * FilePathField
     * ✓ FloatField
-    * ImageField
     * ✓ IPAddressField
     * ✓ MultipleChoiceField
     * ✓ NullBooleanField
     * ✓ RegexField
-    * SlugField
+    * ✓ SlugField
     * ✓ TimeField
     * ✓ URLField
+    * FileField
+    * FilePathField
+    * ImageField
 
 * All form field options implemented (goal 1/30):
     * ✓ required
