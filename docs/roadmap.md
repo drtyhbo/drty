@@ -60,7 +60,7 @@ By 0.2.0:
     * ✓ TypedChoiceField
     * ✓ DateField
     * ✓ DateTimeField
-    * DecimalField
+    * ✓ DecimalField
     * FileField
     * FilePathField
     * ✓ FloatField
