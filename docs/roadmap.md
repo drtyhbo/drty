@@ -57,7 +57,7 @@ By 0.2.0:
     * ✓ BooleanField
     * ✓ ChoiceField
     * ✓ EmailField
-    * TypedChoiceField
+    * ✓ TypedChoiceField
     * ✓ DateField
     * ✓ DateTimeField
     * DecimalField
