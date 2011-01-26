@@ -20,17 +20,14 @@ By 0.2.0:
     * ✓ DateTimeField
     * ✓ DateField
     * ✓ ForeignKey
-    * BigIntegerField
-    * CommaSeperatedIntegerField
+    * ✓ IPAddressField
+    * ✓ SlugField
+    * ✓ TimeField
+    * ✓ URLField
+    * JSONField
     * FileField
     * FilePathField
     * ImageField
-    * ✓ IPAddressField
-    * SlugField
-    * TimeField
-    * ✓ URLField
-    * XMLField
-    * JSONField
     * ManyToManyField
     * OneToOneField
  
