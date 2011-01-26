@@ -25,10 +25,10 @@ By 0.2.0:
     * FileField
     * FilePathField
     * ImageField
-    * IPAddressField
+    * ✓ IPAddressField
     * SlugField
     * TimeField
-    * URLField
+    * ✓ URLField
     * XMLField
     * JSONField
     * ManyToManyField
