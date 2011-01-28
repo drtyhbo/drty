@@ -24,7 +24,7 @@ By 0.2.0:
     * ✓ SlugField
     * ✓ TimeField
     * ✓ URLField
-    * JSONField
+    * ✓ JSONField
     * FileField
     * FilePathField
     * ImageField
@@ -66,6 +66,7 @@ By 0.2.0:
     * ✓ SlugField
     * ✓ TimeField
     * ✓ URLField
+	* ✓ JSONField
     * FileField
     * FilePathField
     * ImageField
