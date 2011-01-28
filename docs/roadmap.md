@@ -40,12 +40,12 @@ By 0.2.0:
     * ✓ helpText
     * ✓ unique
     * ✓ verboseName
+    * ✓ errorMessages
+    * ✓ validators
     * dbTablespace
-    * errorMessages
     * uniqueForDate
     * uniqueForMonth
     * uniqueForYear
-    * validators
 
 * All form fields implemented (goal 1/30):
     * ✓ IntegerField
@@ -76,8 +76,8 @@ By 0.2.0:
     * ✓ initial
     * ✓ widget
     * ✓ helpText
-    * errorMessages
-    * validators
+    * ✓ errorMessages
+    * ✓ validators
     * localize
 
 * Template syntax be identical to Django
