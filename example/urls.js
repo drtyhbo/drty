@@ -4,6 +4,7 @@ var drty = require('drty'),
 	views = require('./blog/views');
 
 exports.urlpatterns = patterns(
+	url('^/admin/', drty.contrib.admin.urls.urlpatterns),
 	url('^/login/$', 'login', views.login),
 	url('^/logout/$', 'logout', views.logout),
 	url('^/register/$', 'register', views.register),
