@@ -1,4 +1,4 @@
-forms -- drty.forms
+forms
 ====================================
 
 The Form object gives you a super easy way to create and manage HTML forms.
@@ -9,28 +9,26 @@ The first step to creating a new form is to extend `drty.forms.Form`. For exampl
 
     var forms = drty.forms;
     var NewForm = forms.Form.extend({
-    	username: new forms.CharField({required: true}),
+    	username: new forms.CharField(),
     	password: new forms.CharField({
-    		widget: new forms.widgets.PasswordInput(),
-			required: true
+    		widget: new forms.widgets.PasswordInput()
     	}),
 
-    	firstName: new forms.CharField(),
-    	lastName: new forms.CharField(),
-    	age: new forms.IntegerField()
+    	firstName: new forms.CharField({required: false}),
+    	lastName: new forms.CharField({required: false}),
+    	age: new forms.IntegerField({required: false})
     });
 
-When extending, include all of the fields that you would like in your form. In the above
-example, there are 5 fields.
+In the above example `NewForm` contains 5 fields.
 
-To create a blank instance of your form, you can do the following:
+To create a blank instance of `NewForm`, do the following:
 
     var form = new NewForm();
 
-`form` is now an instance of NewForm with no initial values set. If you render it,
-all fields will be rendered with empty values.
+`form` is now an instance of `NewForm` with no field values. If you were to render it,
+all fields would be blank.
 
-To create an instance of your form with values, pass the values as a hash to
+To create an instance of `NewForm` with values, pass the values as a hash to
 the constructor, as in:
 
     var form = new NewForm({
@@ -41,14 +39,14 @@ the constructor, as in:
     	age: 32
     });
 
-`form` is now an instance of NewForm with values set for all fields. If you render it,
-all fields will be rendered with values.
+`form` is now an instance of `NewForm` with values set for all fields. If you were to render it,
+all fields would have values.
 
 ## Rendering
 
 To render a form instance, use the following methods:
 
-`asTable` - Renders the form as a table. The example above would be rendered as:
+`asTable` - Renders the form as a table. `NewForm` would be rendered as:
 
     <tr><td><label for="username">Username</td><td><input type="text" name="username" id="username" value=""></td></tr>
     <tr><td><label for="password">Password</td><td><input type="password" name="password" id="password" value=""></td></tr>
@@ -58,11 +56,11 @@ To render a form instance, use the following methods:
 
 ## Validation
 
-Let's say a user has submitted a form via POST. To load those values into your form, do:
+Let's say a user has submitted a form via POST. To load the POST values into your form, do:
 
 	var form = NewForm(request.POST);
 
-`form` now contains the values the user has entered.
+`form` now contains the submitted values.
 
 To validate the form, call `form.clean()`. This will return true if everything validated successfully,
 or false otherwise. If the validation was unsuccessful, `form.errors` will contain a hash of the error
@@ -75,11 +73,11 @@ messages keyed off the field name. For example:
 
 	form.clean();
 
-After this block executes:
+After the abevo block executes:
 
  * `form.errors.username` will be set because username is a required field but
 is not provided.
- * `form.errors.age` will be set because age is provided but is not an integer. 
+ * `form.errors.age` will be set because age is not an integer. 
 
 To access the cleaned values, access the field name directly:
 
@@ -91,42 +89,76 @@ or:
 
 ## Fields
 
-The constructor for every field is:
+Every field has the same constructor signature:
 
     drty.forms.Field(options)
 
-where `options` is a hash of options. There is a default set of options to choose from,
+where `options` is a hash of field options. There is a default set of options to choose from,
 as well as options specific to each field.
 
 ### Default options
 
+`required` - Specify whether the field is required. Default: `true`.   
 
+`validators` - A list of validator functions that will be executed when the field is validated.
+A validator function should have the following signature:
+
+    function(value) {
+    	...
+    }
+
+If `value` is invalid, the function should throw a `drty.core.exceptions.ValidationError` exception.
+Here's an example validator for floats.
+
+    function validateFloat(value) {
+    	if (isNaN(parseFloat(value))) {
+    		throw new drty.core.exceptions.ValidationError('A float is expected', 'invalid');
+    	}
+    }
+
+Default: `[]`
+
+`errorMessages` - A hash of error messages to use instead in place of the default error messages.
+For example, to override the error messages for a `CharField`, use the following code:
+
+    new forms.CharField({
+    	errorMessages: {
+    		required: 'This field is required',
+    		minLength: 'Your entry is too short!',
+    		maxLength: 'Your entry is too long!'
+    	},
+    	minLength: 10,
+    	maxLength: 100
+    });
+
+Default: `{}`
 
 ### BooleanField
 
 `drty.forms.BooleanField`
 
-*return*: `Boolean`  
+*field value*: `Boolean`  
 *widget*: `drty.forms.widgets.CheckboxInput`
 
 ### CharField
 
-`drty.forms.CharField`
+`drty.forms.CharField(options)`
 
 *options*:
 
- * `minLength` - The minimum length allowed by this field. Default: 0.
- * `maxLength` - The maximum length allowed by this field. Default: infinity.
+ * `minLength` - The minimum length allowed. Default: 0.
+ * `maxLength` - The maximum length allowed. Default: infinity.
 
-*return*: `String`  
+*field value*: `String`  
 *validation*: `minLengthValidator`, `maxLengthValidator`  
+*errors*: `required`, `minLength`, `maxLength`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### ChoiceField
 
-`drty.forms.ChoiceField`
+`drty.forms.ChoiceField(options)`
 
-To use the ChoiceField, you must specify a list of items for the user to choose from.
+To use the `ChoiceField`, you must specify a list of items for the user to choose from.
 For example:
 
     fruit: new forms.ChoiceField({
@@ -137,7 +169,7 @@ For example:
 		}
     })
 
-Will render as such:
+Will render as:
 
     <select name="fruit">
 	<option value="apple">Apple</option>
@@ -147,145 +179,157 @@ Will render as such:
 
 *options*:
 
- * `choices` - REQUIRED. A hash of choices that will be rendered as option fields.
+ * `choices` - REQUIRED. A hash of choices for the user to select from.
 
-*return*: `String`  
+*field value*: `String`  
 *validation*: `inListValidator`  
+*errors*: `required`, `invalidChoice`   
 *widget*: `drty.forms.widgets.Select`
 
 ### MultipleChoiceField
 
-`drty.forms.MultipleChoiceField`
+`drty.forms.MultipleChoiceField(options)`
 
 The `MultipleChoiceField` takes the same options as `ChoiceField` and renders as 
 a select multiple field.
 
 *options*:
 
- * `choices` - REQUIRED. A hash of choices that will be rendered as option fields.
+ * `choices` - REQUIRED. A hash of choices for the user to select from.
 
-*return*: `Array`  
+*field value*: `Array`  
 *validation*: `inListValidator`  
+*errors*: `required`, `invalidChoice`   
 *widget*: `drty.forms.widgets.SelectMultiple`
 
 ### TypedChoiceField
 
-`drty.forms.TypedChoiceField`
+`drty.forms.TypedChoiceField(options)`
 
 The `TypedChoiceField` takes the same options as the `ChoiceField`.
 
 *options*:
 
- * `choices` - REQUIRED. A hash of choices that will be rendered as option fields.
+ * `choices` - REQUIRED. A hash of choices for the user to select from.
  * `coerce` - A function that takes the field value as a parameter and returns a coerced
 value. Called during `clean()`. Default: `function(value) { return value; }`.
  * `emptyValue` - The value to return if this field is empty. Default: ''.
 
-*return*: `String`  
+*field value*: `String`  
 *validation*: `inListValidator`  
+*errors*: `required`, `invalidChoice`   
 *widget*: `drty.forms.widgets.Select`
 
 ### NullBooleanField
 
-`drty.forms.NullBooleanField`
+`drty.forms.NullBooleanField(options)`
 
-Renders as a select field with three options: Yes, No, or Unknown.
+Renders as a select field with three options: Yes, No, and Unknown.
 
-*return*: `Boolean` or `null`  
+*field value*: `Boolean` or `null`  
 *validation*: `inListValidator`  
+*errors*: `required`, `invalidChoice`   
 *widget*: `drty.forms.widgets.Select`
 
 ### FloatField
 
-`drty.forms.FloatField`
+`drty.forms.FloatField(options)`
 
 *options*:
 
- * `minValue` - The minimum value allowed by this field. Default: 0.
- * `maxValue` - The maximum value allowed by this field. Default: infinity.
+ * `minValue` - The minimum value allowed. Default: 0.
+ * `maxValue` - The maximum value allowed. Default: infinity.
 
-*return*: `Number`   
+*field value*: `Number`   
 *validation*: `minValueValidator`, `maxValueValidator`, `validateFloat`  
+*errors*: `required`, `invalid`, `minValue`, `maxValue`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### DecimalField
 
-`drty.forms.DecimalField`
+`drty.forms.DecimalField(options)`
 
 *options*:
 
- * `minValue` - The minimum value allowed by this field. Default: 0.
- * `maxValue` - The maximum value allowed by this field. Default: infinity.
+ * `minValue` - The minimum value allowed. Default: 0.
+ * `maxValue` - The maximum value allowed. Default: infinity.
  * `maxDigits` - The maximum number of digits allowed. Default: infinite.
  * `decimalPlaces` - The maximum number of decimal places allowed. Default: infinite.
 
-*return*: `Number`   
+*field value*: `Number`   
 *validation*: `minValueValidator`, `maxValueValidator`, `validateFloat`, `maxDigitsValidator`, `decimalPlacesValidator`   
+*errors*: `required`, `invalid`, `minValue`, `maxValue`, `maxDigits`, `maxDecimalPlaces`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### IntegerField
 
-`drty.forms.IntegerField`
+`drty.forms.IntegerField(options)`
 
 *options*:
 
- * `minValue` - The minimum value allowed by this field. Default: 0.
- * `maxValue` - The maximum value allowed by this field. Default: infinity.
+ * `minValue` - The minimum value allowed. Default: 0.
+ * `maxValue` - The maximum value allowed. Default: infinity.
 
-*return*: `Number`   
+*field value*: `Number`   
 *validation*: `minValueValidator`, `maxValueValidator`, `validateInteger`   
+*errors*: `required`, `invalid`, `minValue`, `maxValue`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### RegexField
 
-`drty.forms.RegexField`
+`drty.forms.RegexField(options)`
 
 *options*:
 
  * `regex` - REQUIRED. A regular expression that will be used to validate the field. Can be either a `String`
 or a `RegExp`.
 
-*return*: `String`   
+*field value*: `String`   
 *validation*: `regexValidator`   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### EmailField
 
-`drty.forms.EmailField`
+`drty.forms.EmailField(options)`
 
-*return*: `String`   
+*field value*: `String`   
 *validation*: `validateEmail`   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### IPAddressField
 
-`drty.forms.IPAddressField`
+`drty.forms.IPAddressField(options)`
 
-*return*: `String`   
+*field value*: `String`   
 *validation*: `validateIpv4Address`   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### URLField
 
-`drty.forms.URLField`
+`drty.forms.URLField(options)`
 
-*return*: `String`   
+*field value*: `String`   
 *validation*: `validateURL`   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### SlugField
 
-`drty.forms.SlugField`
+`drty.forms.SlugField(options)`
 
 A slug field can contain letters, numbers, underscores or hyphens.
 
-*return*: `String`   
+*field value*: `String`   
 *validation*: `validateSlug`   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### DateTimeField
 
-`drty.forms.DateTimeField`
+`drty.forms.DateTimeField(options)`
 
 The `DateTimeField` supports the following date/time formats by default:
 
@@ -301,13 +345,14 @@ The `DateTimeField` supports the following date/time formats by default:
  * `inputFormats` - An array of date/time format specifiers used to validate the field. Default: Listed above.
  * `format` - A format specifier used to render the value of the field. Default: `'%Y-%m-%d %H:%M:%S'`
 
-*return*: `Date`   
+*field value*: `Date`   
 *validation*: Validates against the date/time formats.   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### DateField
 
-`drty.forms.DateField`
+`drty.forms.DateField(options)`
 
 The `DateField` supports the following date formats by default:
 
@@ -324,16 +369,17 @@ The `DateField` supports the following date formats by default:
 
 *options*:
 
- * `inputFormats` - An array of date/time format specifiers used to validate the field. Default: Listed above.
+ * `inputFormats` - An array of date format specifiers used to validate the field. Default: Listed above.
  * `format` - A format specifier used to render the value of the field. Default: `'%Y-%m-%d'`
 
-*return*: `Date`   
+*field value*: `Date`   
 *validation*: Validates against the date formats.   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### TimeField
 
-`drty.forms.TimeField`
+`drty.forms.TimeField(options)`
 
 The `TimeField` supports the following time formats by default:
 
@@ -342,37 +388,41 @@ The `TimeField` supports the following time formats by default:
 
 *options*:
 
- * `inputFormats` - An array of date/time format specifiers used to validate the field. Default: Listed above.
+ * `inputFormats` - An array of time format specifiers used to validate the field. Default: Listed above.
  * `format` - A format specifier used to render the value of the field. Default: `'%H:%M:%S'`
 
-*return*: `Date`   
+*field value*: `Date`   
 *validation*: Validates against the time formats.   
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.TextInput`
 
 ### TextField
 
-`drty.forms.TextField`
+`drty.forms.TextField(options)`
 
 *options*:
 
- * `minLength` - The minimum length allowed by this field. Default: 0.
- * `maxLength` - The maximum length allowed by this field. Default: infinity.
+ * `minLength` - The minimum length allowed. Default: 0.
+ * `maxLength` - The maximum length allowed. Default: infinity.
 
-*return*: `String`  
+*field value*: `String`  
 *validation*: `minLengthValidator`, `maxLengthValidator`  
+*errors*: `required`, `minLength`, `maxLength`   
 *widget*: `drty.forms.widgets.Textarea`
 
 ### JSONField
 
-`drty.forms.JSONField`
+`drty.forms.JSONField(options)`
 
-*return*: `Object`  
+*field value*: `Object`  
 *validation*: Validates that the field contains proper JSON.  
+*errors*: `required`, `invalid`   
 *widget*: `drty.forms.widgets.Textarea`
 
 ### FileField
 
-`drty.forms.FileField`
+`drty.forms.FileField(options)`
 
-*return*: `UploadedFile`  
+*field value*: `UploadedFile`  
+*errors*: `required`   
 *widget*: `drty.forms.widgets.FileInput`
