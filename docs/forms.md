@@ -73,13 +73,13 @@ messages keyed off the field name. For example:
 
 	form.clean();
 
-After the abevo block executes:
+After the above block executes:
 
  * `form.errors.username` will be set because username is a required field but
 is not provided.
  * `form.errors.age` will be set because age is not an integer. 
 
-To access the cleaned values, access the field name directly:
+To access the cleaned values, you can access the field directly:
 
     form.username
 
@@ -108,7 +108,7 @@ A validator function should have the following signature:
     }
 
 If `value` is invalid, the function should throw a `drty.core.exceptions.ValidationError` exception.
-Here's an example validator for floats.
+Here's an example validator for floats:
 
     function validateFloat(value) {
     	if (isNaN(parseFloat(value))) {
