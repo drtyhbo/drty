@@ -20,7 +20,7 @@ exports.settings = {
 	],
 	MIDDLEWARE_CLASSES: [
 		drty.contrib.sessions.middleware.SessionMiddleware,
-		drty.contrib.auth.middleware.AuthenticationMiddleware
+		drty.contrib.auth.middleware.AuthMiddleware
 	],
 	TEMPLATE_CONTEXT_PROCESSORS: [
 		require('./index').contextProcessor
