@@ -18,7 +18,11 @@ exports.login = [
 
 		if (request.method == 'POST') {
 			var form = new forms.LoginForm(request.POST);
-			if (form.clean()) {
+			form.clean(function(err) {
+				if (err) {
+					return render({form: form});
+				}	
+
 				var username = form.cleanValues.username,
 					password = form.cleanValues.password;
 
@@ -33,9 +37,7 @@ exports.login = [
 						response.redirect(request.GET['next'] || drty.urls.reverse('home'));
 					}
 				});
-			} else {
-				render({form: form});
-			}
+			});
 		} else {
 			render({form: new forms.LoginForm()});
 		}
@@ -48,7 +50,11 @@ exports.register = function(request, response) {
 
 	if (request.method == 'POST') {
 		var form = new forms.RegisterForm(request.POST);
-		if (form.clean()) {
+		form.clean(function(err) {
+			if (err) {
+				return render({form: form});				
+			}
+	
 			var username = form.cleanValues.username,
 				password = form.cleanValues.password,
 				email = form.cleanValues.email;
@@ -93,7 +99,11 @@ exports.home = [
 
 		if (request.method == "POST") {
 			var createBlogForm = new forms.CreateBlogForm(request.POST);
-			if (createBlogForm.clean()) {
+			createBlogForm.clean(function(err) {
+				if (err) {
+					return loadBlogs()
+				}
+
 				var blog = new models.Blog({
 					title: createBlogForm.cleanValues.title,
 					isPublic: createBlogForm.cleanValues.isPublic,
@@ -105,9 +115,7 @@ exports.home = [
 						response.redirect(drty.urls.reverse('blog', blog.id));
 					}
 				});
-			} else {
-				loadBlogs();
-			}
+			});
 		} else {
 			var createBlogForm = new forms.CreateBlogForm();
 			loadBlogs();
@@ -144,7 +152,11 @@ exports.blog = [
 		}
 		if (request.method == "POST") {
 			var form = new forms.CreateEntryForm(request.POST);
-			if (form.clean()) {
+			form.clean(function(err) {
+				if (err) {
+					return render(form);
+				}
+
 				new models.Entry({
 					blog: request.blog,
 					title: form.cleanValues.title,
@@ -152,9 +164,7 @@ exports.blog = [
 				}).save(function(error, entry) {
 					render(new forms.CreateEntryForm());
 				});
-			} else {
-				render(form);
-			}
+			});
 		} else {
 			var form = new forms.CreateEntryForm();
 			render(form);
