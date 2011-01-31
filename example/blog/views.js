@@ -69,9 +69,7 @@ exports.register = function(request, response) {
 					response.redirect(drty.urls.reverse('login'));
 				}
 			});
-		} else {
-			render({form: form});
-		}
+		});
 	} else {
 		render({form: new forms.RegisterForm()});
 	}
