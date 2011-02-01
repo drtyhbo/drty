@@ -25,9 +25,9 @@ By 0.2.0:
     * ✓ TimeField
     * ✓ URLField
     * ✓ JSONField
-    * FileField
+    * ✓ FileField
     * FilePathField
-    * ImageField
+    * ✓ ImageField
     * ManyToManyField
     * OneToOneField
  
@@ -67,9 +67,9 @@ By 0.2.0:
     * ✓ TimeField
     * ✓ URLField
 	* ✓ JSONField
-    * FileField
+    * ✓ FileField
     * FilePathField
-    * ImageField
+    * ✓ ImageField
 
 * All form field options implemented (goal 1/30):
     * ✓ required
