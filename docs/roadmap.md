@@ -84,5 +84,5 @@ By 0.2.0:
 * Template syntax be identical to Django
 * Unit tests for everything except contrib
 * ✓ Fixtures
-* Custom commands for apps
+* ✓ Custom commands for apps
 * drty.contrib.admin
