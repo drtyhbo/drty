@@ -135,3 +135,5 @@ a {
 	text-decoration: none;
 }
 a:hover { color: #000; }
+
+.actions .delete { border: 1px solid #600000; }

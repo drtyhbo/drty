@@ -1,5 +1,16 @@
 {% extends BASE %}
 
+{% block head %}
+<script type="text/javascript">
+	function onDelete() {
+		if (confirm("Are you sure you want to delete {{ model }}?")) {
+			return true;
+		}
+		return false;
+	}
+</script>
+{% endblock %}
+
 {% block body %}
 	<div class="header">
 		<span class="title">Drty Administration</span>
@@ -18,7 +29,10 @@
 			{{ form }}
 			<tr>
 				<td class="actions" align="right" valign="middle" colspan="2">
-					<input type="submit" value="Save">
+					{% if model %}
+					<input type="submit" value="Delete" name="submit" class="delete" onclick="return onDelete();">
+					{% endif %}
+					<input type="submit" name="submit" value="Save">
 				</td>
 			</tr>
 		</form>
