@@ -11,7 +11,7 @@
 
 	<div class="content">
 		<h3>Change {{ modelName }}</h3>
-		<form method="POST">
+		<form method="POST" enctype="multipart/form-data">
 		<table class="fields" border="1" cellspacing="0">
 			<col class="name"></col>
 			<col class="value"></col>
