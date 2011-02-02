@@ -1,1 +1,1 @@
-exports.models = require('./models');
+exports.dirname = __dirname;
