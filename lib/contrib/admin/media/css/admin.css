@@ -137,3 +137,4 @@ a {
 a:hover { color: #000; }
 
 .actions .delete { border: 1px solid #600000; }
+.add { float: right; margin-top: -2.5em; }

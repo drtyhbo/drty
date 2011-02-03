@@ -11,6 +11,8 @@
 
 	<div class="content">
 		<h3>Select {{ modelName }} to change</h3>
+		<input type="submit" value="Add {{ modelName }}" class="add" onclick="window.location = '{% url "__adminAdd" modelName %}'">
+
 		<div class="items">
 		<table cellspacing="0">
 		<tr>
