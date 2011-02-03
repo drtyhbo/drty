@@ -37,4 +37,8 @@
 			</tr>
 		</form>
 	</div>
+	
+	<script type="text/javascript">
+		document.getElementsByTagName('input')[0].focus();
+	</script>
 {% endblock body %}
