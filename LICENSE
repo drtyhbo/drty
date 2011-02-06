@@ -9,6 +9,10 @@ are:
     by Anders Hellerup Madsen and Simon Willisons. Released under a
     BSD license.
 
+  - md5, located under lib/deps/md5. Not sure what this code is copyrighted,
+    but it's written by Joseph Myers and can be found at
+    http://www.myersdaily.org/joseph/javascript/md5-text.html.
+
 drty's license follows:
 
 Copyright 2010, 2011 Andreas Binnewies. All rights reserved.
