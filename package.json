@@ -1,7 +1,7 @@
 { 
 	"name": "drty",
 	"description": "Django port to node.js",
-	"version": "0.1.4",
+	"version": "0.1.4	",
 	"author": "Andreas Binnewies <drtyhbo@gmail.com>",
 	"bin": "./bin/drty-admin",
 	"main": "./lib/drty",
@@ -10,7 +10,7 @@
 		"mysql-libmysqlclient": ">=1.2.1",
 		"nodeunit": ">=0.5.0",
 		"formidable": ">=0.9.11",
-		"request": ">=1.2.0",
+		"request": ">=1.0.0",
 		"imagemagick": ">=0.1.1"
 	}
 }
