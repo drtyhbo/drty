@@ -7,7 +7,7 @@
 	"main": "./lib/drty",
 	"engines": { "node" : ">=0.2.6" },
 	"dependencies": {
-		"mysql-libmysqlclient": ">=1.2.1",
+		"mysql-libmysqlclient": "=1.2.1",
 		"nodeunit": ">=0.5.0",
 		"formidable": ">=0.9.11",
 		"request": ">=1.2.0",
